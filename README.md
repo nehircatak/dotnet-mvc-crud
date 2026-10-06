@@ -30,5 +30,5 @@ This project features complete **CRUD** functionality, real-time student/course 
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
-   cd YOUR_REPO_NAME
+   git clone [https://github.com/nehircatak/dotnet-mvc-crud.git](https://github.com/nehircatak/dotnet-mvc-crud.git)
+   cd dotnet-mvc-crud.git
