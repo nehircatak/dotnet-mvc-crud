@@ -1,0 +1,46 @@
+@model DotNet.Models.KullaniciModel
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-primary text-white text-center py-3">
+            <h3 class="mb-0">🔑 Kullanıcı Girişi</h3>
+        </div>
+        <div class="card-body p-4">
+
+            @if (ViewBag.Hata != null)
+            {
+                <div class="alert alert-danger text-center">
+                    @ViewBag.Hata
+                </div>
+            }
+
+            <form asp-action="Giris" method="post">
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="ornek@email.com" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Sifre" class="form-label"></label>
+                    <input asp-for="Sifre" class="form-control" placeholder="••••••••" />
+                    <span asp-validation-for="Sifre" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 mt-2 fw-bold">Giriş Yap</button>
+            </form>
+        </div>
+        <div class="card-footer text-center py-3 bg-light">
+            <span>Hesabınız yok mu? </span>
+            <a asp-action="Kayit" class="text-decoration-none fw-bold text-success">Hemen Kayıt Olun</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

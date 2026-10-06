@@ -1,0 +1,111 @@
+@model IEnumerable<DotNet.Models.EgitimModel>
+
+@{
+    ViewData["Title"] = "Tüm Eğitim Kayıtları";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>📚 Kayıtlı Tüm Eğitimler</h2>
+        <a asp-action="Index" class="btn btn-success">+ Yeni Kayıt Ekle</a>
+    </div>
+
+    <!-- Arama Çubuğu -->
+    <form asp-action="Liste" method="get" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="aramaMetni" value="@ViewBag.MevcutArama" class="form-control" placeholder="Öğrenci adı veya konu ara..." />
+            <button type="submit" class="btn btn-primary">🔍 Ara</button>
+            @if (!string.IsNullOrEmpty(ViewBag.MevcutArama as string))
+            {
+                <a asp-action="Liste" class="btn btn-outline-secondary">Aramayı Temizle</a>
+            }
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">
+            Arama kriterlerinize uygun hiçbir kayıt bulunamadı.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover table-striped border align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col"># ID</th>
+                        <th scope="col">Öğrenci Adı</th>
+                        <th scope="col">Tamamlanan Gün</th>
+                        <th scope="col">Öğrenilen Konu</th>
+                        <th scope="col" class="text-center">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.Id</strong></td>
+                            <td>@item.OgrenciAd</td>
+                            <td><span class="badge bg-primary">@item.GunSayisi. Gün</span></td>
+                            <td>@item.TamamlananKonu</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Detay" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Detay</a>
+                                    <a asp-action="Duzenle" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning ms-1">Düzenle</a>
+                                    
+                                    <form asp-action="Sil" asp-route-id="@item.Id" method="post" class="d-inline sil-formu">
+                                        <button type="button" class="btn btn-sm btn-outline-danger ms-1 sil-btn" data-ogrenci="@item.OgrenciAd">
+                                            Sil
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @if (TempData["Mesaj"] != null)
+    {
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: '@TempData["Mesaj"]',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        </script>
+    }
+
+    <script>
+        document.querySelectorAll('.sil-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const form = this.closest('.sil-formu');
+                const ogrenciAd = this.getAttribute('data-ogrenci');
+
+                Swal.fire({
+                    title: 'Emin misiniz?',
+                    text: `${ogrenciAd} adlı öğrencinin kaydı kalıcı olarak silinecektir!`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Evet, Sil!',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,40 @@
+@model DotNet.Models.EgitimModel
+
+@{
+    ViewData["Title"] = "Kayıt Düzenle";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <h2 class="mb-4 text-center">✏️ Kayıt Düzenle (ID: @Model.Id)</h2>
+
+    <form asp-action="Duzenle" method="post" class="card p-4 shadow-sm">
+        <!-- Gizli ID Alanı: Hangi kaydın güncelleneceğini bilmek için şarttır -->
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="OgrenciAd" class="form-label">Öğrenci Adı</label>
+            <input asp-for="OgrenciAd" class="form-control" />
+            <span asp-validation-for="OgrenciAd" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="GunSayisi" class="form-label">Tamamlanan Gün</label>
+            <input asp-for="GunSayisi" type="number" class="form-control" />
+            <span asp-validation-for="GunSayisi" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="TamamlananKonu" class="form-label">Öğrenilen Konu</label>
+            <input asp-for="TamamlananKonu" class="form-control" />
+            <span asp-validation-for="TamamlananKonu" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between mt-3">
+            <a asp-action="Liste" class="btn btn-secondary">İptal</a>
+            <button type="submit" class="btn btn-warning">Değişiklikleri Kaydet</button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

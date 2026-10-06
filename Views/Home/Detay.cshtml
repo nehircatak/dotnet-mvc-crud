@@ -1,0 +1,20 @@
+@model DotNet.Models.EgitimModel
+
+@{
+    ViewData["Title"] = "Eğitim Detayı";
+}
+
+<div class="text-center mt-5">
+    <div class="alert alert-success shadow-lg p-5">
+        <h1 class="display-4">Tebrikler, @Model.OgrenciAd! 🎉</h1>
+        <p class="lead mt-3">Formunuz başarıyla alındı ve yeni sayfaya yönlendirildiniz.</p>
+        <hr />
+        <div class="text-start d-inline-block mt-3">
+            <p><strong>Öğrenci Adı:</strong> @Model.OgrenciAd</p>
+            <p><strong>Tamamlanan Gün:</strong> @Model.GunSayisi. Gün</p>
+            <p><strong>Öğrenilen Konu:</strong> @Model.TamamlananKonu</p>
+        </div>
+    </div>
+
+    <a asp-action="Index" class="btn btn-outline-primary mt-3">Yeni Form Doldur</a>
+</div>
